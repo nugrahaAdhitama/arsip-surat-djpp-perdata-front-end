@@ -24,12 +24,14 @@ const Sidebar: React.FC<any> = ({ active }) => {
       name: "Surat Masuk",
       link: "/surat-masuk",
       component: <MailIcon color="inherit" fontSize="inherit" />,
+      text: "Surat Masuk",
     },
     {
       id: 2,
       name: "Surat Keluar",
       link: "/surat-keluar",
       component: <SendIcon color="inherit" fontSize="inherit" />,
+      text: "Surat Keluar",
     },
   ];
 
@@ -92,8 +94,8 @@ const Sidebar: React.FC<any> = ({ active }) => {
   };
 
   return (
-    <section className="flex flex-col bg-white rounded-l-3xl shadow-md w-2/12">
-      <div className="2-16 mx-auto mt-12 mb-20 pl-4 pr-5 pt-2 pb-3 bg-secondary rounded-2xl text-primary text-4xl">
+    <section className="flex flex-col w-3/12 bg-white rounded-l-3xl shadow-md">
+      <div className="w-16 mx-auto mt-12 mb-20 pl-4 pr-5 pt-2 pb-3 bg-secondary rounded-2xl text-primary text-4xl">
         <WidgetsRoundedIcon color="inherit" fontSize="inherit" />
       </div>
 
@@ -104,22 +106,26 @@ const Sidebar: React.FC<any> = ({ active }) => {
             href={menu.link}
             about={menu.name}
             title={menu.name}
-            className={`w-16 p-4 border rounded-2xl mb-4 text-2xl flex items-center justify-center py-5 ${
+            className={`w-full p-4 border rounded-2xl mb-4 text-2xl flex items-center justify-center py-5 ${
               menu.name == activeMenu
                 ? "text-primary bg-secondary border-secondary"
                 : "text-gray-700"
             } hover:text-primary hover:bg-secondary hover:border-secondary duration-700 transition-all`}
           >
-            {menu.component}
+            <p className="mr-5">{menu.component}</p>
+            {menu.text}
           </Link>
         ))}
 
         <button
           type="button"
           onClick={handleLogoutUser}
-          className="w-16 p-4 mt-8 border text-gray-700 rounded-2xl text-2l flex items-center justify-center py-5"
+          className="w-16 p-4 mt-8 border text-gray-700 rounded-2xl text-2xl flex items-center justify-center py-5"
         >
-          <LogoutOutlinedIcon color="inherit" fontSize="inherit" />
+          <p className="mr-5">
+            <LogoutOutlinedIcon color="inherit" fontSize="inherit" />
+          </p>
+          <p>Logout</p>
         </button>
       </nav>
     </section>

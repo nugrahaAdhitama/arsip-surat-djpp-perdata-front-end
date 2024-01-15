@@ -2,7 +2,7 @@ import React from "react";
 
 const Main: React.FC<any> = ({ active, description, children }) => {
   return (
-    <section>
+    <section className="p-16 w-full h-screen overflow-scroll scrollbar-hide">
       <div className="flex flex-col gap-2 mb-3">
         <h1 className="font-semibold text-primary text-3xl md:text-[50px] md:w-[90%] md:leading-[100%] leading-[150%]">
           {active}
