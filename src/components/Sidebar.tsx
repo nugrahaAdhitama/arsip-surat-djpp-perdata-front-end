@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 import WidgetsRoundedIcon from "@mui/icons-material/WidgetsRounded";
-import ImportContactsOutlinedIcon from "@mui/icons-material/ImportContactsOutlined";
-import AutoAwesomeOutlinedIcon from "@mui/icons-material/AutoAwesomeOutlined";
-import Groups2OutlinedIcon from "@mui/icons-material/Groups2Outlined";
-import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
-import InsightsOutlinedIcon from "@mui/icons-material/InsightsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Link from "next/link";
 import axios, { isAxiosError } from "axios";
