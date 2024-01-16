@@ -4,9 +4,12 @@ import TextArea from "@/components/TextArea";
 import { useRouter } from "next/navigation";
 import { getToken } from "@/utils/token";
 import Swal from "sweetalert2";
+import axios, { isAxiosError } from "axios";
 import "@/styles/styles.css";
 
 export default function FormSuratMasuk() {
+  const router = useRouter();
+  const storedToken = getToken();
   const [tanggal_masuk, setTanggalMasuk] = useState<string>("");
   const [tanggal_surat, setTanggalSurat] = useState<string>("");
   const [asal_surat, setAsalSurat] = useState<string>("");
@@ -34,11 +37,79 @@ export default function FormSuratMasuk() {
     setPerihalSurat(e.target.value);
   };
 
+  const handleUploadSuratMasuk = async (e: any) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("tanggal_masuk", tanggal_masuk);
+    formData.append("tanggal_surat", tanggal_surat);
+    formData.append("asal_surat", asal_surat);
+    formData.append("nomor_surat", nomor_surat);
+    formData.append("perihal_surat", perihal_surat);
+    formData.append("file_surat_masuk", file_surat_masuk);
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/surat-masuk",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response);
+
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        icon: "success",
+        title: "Berhasil Menambah Surat Masuk!",
+      });
+
+      router.push("/surat-masuk");
+    } catch (error) {
+      console.error("Error posting data: ", error);
+      if (
+        isAxiosError(error) &&
+        error.response &&
+        error.response.status === 401
+      ) {
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          icon: "error",
+          title: "Failed to upload surat masuk, unauthenticated!",
+        });
+      } else {
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          icon: "error",
+          title: "Internal server error, please upload it later!",
+        });
+
+        router.push("/surat-masuk");
+      }
+    }
+  };
+
   return (
     <form
       action="POST"
       encType="multipart/form-data"
       className="flex flex-col gap-3 mt-5 p-5 bg-secondary rounded-xl w-full h-full text-primary"
+      onSubmit={handleUploadSuratMasuk}
     >
       <div className="flex flex-row gap-3">
         <Input
