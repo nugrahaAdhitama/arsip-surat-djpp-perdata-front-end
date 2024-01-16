@@ -179,21 +179,16 @@ function Home() {
                           className="font-normal"
                         >
                           <button className="p-2 bg-secondary text-primary rounded-md hover:bg-primary hover:text-secondary transition-all duration-150">
-                            <a href="{surat.file_surat_masuk}">File Surat</a>
+                            <a
+                              href={`http://127.0.0.1:8000${surat.file_surat_masuk}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              File Surat
+                            </a>
                           </button>
                         </Typography>
                       </td>
-                      {/* <td className={classes}>
-                        <Typography
-                          as="a"
-                          href="#"
-                          variant="small"
-                          color="blue-gray"
-                          className="font-medium"
-                        >
-                          {Edit}
-                        </Typography>
-                      </td> */}
                     </tr>
                   );
                 })}
