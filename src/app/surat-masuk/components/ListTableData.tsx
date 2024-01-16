@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, Typography } from "@material-tailwind/react";
+import type { CardProps } from "@material-tailwind/react";
+import type { TypographyProps } from "@material-tailwind/react";
 import { getToken } from "@/utils/token";
 import axios from "axios";
 
@@ -44,7 +46,10 @@ export default function ListTableData() {
   }, []);
 
   return (
-    <Card className="h-full w-full overflow-scroll">
+    <Card
+      className="h-full w-full overflow-scroll"
+      placeholder="Card Placeholder"
+    >
       <table className="w-full min-w-max table-auto text-left">
         <thead className="bg-secondary text-primary">
           <tr>
@@ -57,6 +62,7 @@ export default function ListTableData() {
                   variant="small"
                   color="blue-gray"
                   className="font-normal leading-none opacity-70"
+                  placeholder="Your placeholder here"
                 >
                   {head}
                 </Typography>
@@ -66,7 +72,7 @@ export default function ListTableData() {
         </thead>
 
         <tbody>
-          {suratMasuk.map((surat, index) => {
+          {suratMasuk.map((surat: any, index: number) => {
             const isLast = index === suratMasuk.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
@@ -77,6 +83,7 @@ export default function ListTableData() {
                     variant="small"
                     color="blue-gray"
                     className="font-normal"
+                    placeholder="Your placeholder here"
                   >
                     {index + 1}
                   </Typography>
@@ -86,6 +93,7 @@ export default function ListTableData() {
                     variant="small"
                     color="blue-gray"
                     className="font-normal"
+                    placeholder="Your placeholder here"
                   >
                     {surat.tanggal_masuk}
                   </Typography>
@@ -95,6 +103,7 @@ export default function ListTableData() {
                     variant="small"
                     color="blue-gray"
                     className="font-normal"
+                    placeholder="Your placeholder here"
                   >
                     {surat.asal_surat}
                   </Typography>
@@ -104,6 +113,7 @@ export default function ListTableData() {
                     variant="small"
                     color="blue-gray"
                     className="font-normal"
+                    placeholder="Your placeholder here"
                   >
                     {surat.nomor_surat}
                   </Typography>
@@ -113,6 +123,7 @@ export default function ListTableData() {
                     variant="small"
                     color="blue-gray"
                     className="font-normal"
+                    placeholder="Your placeholder here"
                   >
                     {surat.tanggal_surat}
                   </Typography>
@@ -122,6 +133,7 @@ export default function ListTableData() {
                     variant="small"
                     color="blue-gray"
                     className="font-normal"
+                    placeholder="Your placeholder here"
                   >
                     {surat.perihal}
                   </Typography>
@@ -131,6 +143,7 @@ export default function ListTableData() {
                     variant="small"
                     color="blue-gray"
                     className="font-normal"
+                    placeholder="Your placeholder here"
                   >
                     <button className="p-2 bg-secondary text-primary rounded-md hover:bg-primary hover:text-secondary transition-all duration-150">
                       <a
