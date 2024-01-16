@@ -7,6 +7,14 @@ import Swal from "sweetalert2";
 import axios, { isAxiosError } from "axios";
 import "@/styles/styles.css";
 
+const SkeletonInput = () => (
+  <div className="animate-pulse bg-gray-300 h-10 w-full my-2 rounded-md" />
+);
+
+const SkeletonTextArea = () => (
+  <div className="animate-pulse bg-gray-300 h-20 w-full my-2 rounded-md" />
+);
+
 export default function FormSuratMasuk() {
   const router = useRouter();
   const storedToken = getToken();
@@ -16,6 +24,8 @@ export default function FormSuratMasuk() {
   const [nomor_surat, setNomorSurat] = useState<string>("");
   const [perihal_surat, setPerihalSurat] = useState<string>("");
   const [file_surat_masuk, setFileSuratMasuk] = useState<any>(null);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChangeTanggalMasuk = (e: any) => {
     setTanggalMasuk(e.target.value);
@@ -39,13 +49,14 @@ export default function FormSuratMasuk() {
 
   const handleUploadSuratMasuk = async (e: any) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const formData = new FormData();
     formData.append("tanggal_masuk", tanggal_masuk);
     formData.append("tanggal_surat", tanggal_surat);
     formData.append("asal_surat", asal_surat);
     formData.append("nomor_surat", nomor_surat);
-    formData.append("perihal_surat", perihal_surat);
+    formData.append("perihal", perihal_surat);
     formData.append("file_surat_masuk", file_surat_masuk);
 
     try {
@@ -101,6 +112,8 @@ export default function FormSuratMasuk() {
 
         router.push("/surat-masuk");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -111,76 +124,91 @@ export default function FormSuratMasuk() {
       className="flex flex-col gap-3 mt-5 p-5 bg-secondary rounded-xl w-full h-full text-primary"
       onSubmit={handleUploadSuratMasuk}
     >
-      <div className="flex flex-row gap-3">
-        <Input
-          label="Tanggal Masuk"
-          name="tanggal_masuk"
-          type="date"
-          placeholder="Masukkan tanggal masuk surat..."
-          value={tanggal_masuk}
-          onChange={onChangeTanggalMasuk}
-          width="full"
-        />
+      {isLoading ? (
+        // Render Skeletons when loading
+        <>
+          <SkeletonInput />
+          <SkeletonInput />
+          <SkeletonInput />
+          <SkeletonInput />
+          <SkeletonTextArea />
+          <SkeletonTextArea />
+        </>
+      ) : (
+        // Render form fields when not loading
+        <>
+          <div className="flex flex-row gap-3">
+            <Input
+              label="Tanggal Masuk"
+              name="tanggal_masuk"
+              type="date"
+              placeholder="Masukkan tanggal masuk surat..."
+              value={tanggal_masuk}
+              onChange={onChangeTanggalMasuk}
+              width="full"
+            />
 
-        <Input
-          label="Tanggal Surat"
-          name="tanggal_surat"
-          type="date"
-          placeholder="Masukkan tanggal surat..."
-          value={tanggal_surat}
-          onChange={onChangeTanggalSurat}
-          width="full"
-        />
-      </div>
+            <Input
+              label="Tanggal Surat"
+              name="tanggal_surat"
+              type="date"
+              placeholder="Masukkan tanggal surat..."
+              value={tanggal_surat}
+              onChange={onChangeTanggalSurat}
+              width="full"
+            />
+          </div>
 
-      <div className="flex flex-row gap-3">
-        <Input
-          label="Asal Surat"
-          name="asal_surat"
-          type="text"
-          placeholder="Masukkan asal surat..."
-          value={asal_surat}
-          onChange={onChangeAsalSurat}
-          width="half"
-        />
+          <div className="flex flex-row gap-3">
+            <Input
+              label="Asal Surat"
+              name="asal_surat"
+              type="text"
+              placeholder="Masukkan asal surat..."
+              value={asal_surat}
+              onChange={onChangeAsalSurat}
+              width="half"
+            />
 
-        <Input
-          label="Nomor Surat"
-          name="nomor_surat"
-          type="text"
-          placeholder="Masukkan nomor surat..."
-          value={nomor_surat}
-          onChange={onChangeNomorSurat}
-          width="half"
-        />
-      </div>
+            <Input
+              label="Nomor Surat"
+              name="nomor_surat"
+              type="text"
+              placeholder="Masukkan nomor surat..."
+              value={nomor_surat}
+              onChange={onChangeNomorSurat}
+              width="half"
+            />
+          </div>
 
-      <TextArea
-        label="Perihal"
-        name="perihal"
-        placeholder="Masukkan perihal surat..."
-        value={perihal_surat}
-        onChange={onChangePerihalSurat}
-        width="full"
-      />
+          <TextArea
+            label="Perihal"
+            name="perihal"
+            placeholder="Masukkan perihal surat..."
+            value={perihal_surat}
+            onChange={onChangePerihalSurat}
+            width="full"
+          />
 
-      <label htmlFor="file_surat_masuk">
-        Pilih file surat masuk di sini...
-      </label>
-      <input
-        id="file_surat_masuk"
-        name="file_surat_masuk"
-        type="file"
-        placeholder="Masukkan file surat..."
-        onChange={(e: any) => setFileSuratMasuk(e.target.files[0])}
-        width="full"
-      />
+          <label htmlFor="file_surat_masuk">
+            Pilih file surat masuk di sini...
+          </label>
+          <input
+            id="file_surat_masuk"
+            name="file_surat_masuk"
+            type="file"
+            placeholder="Masukkan file surat..."
+            onChange={(e: any) => setFileSuratMasuk(e.target.files[0])}
+            width="full"
+          />
+        </>
+      )}
 
       <button
         about="Submit"
         title="Submit"
         type="submit"
-        className={`bg-primary text-secondary font-medium text-sm md:text-base rounded-full px-2 md:px-5 py-3 text-center cursor-pointer mt-6 hover:bg-primary hover:text-white md:mt-0 w-full duration-700 transition-all`}
+        className={`bg-primary text-secondary font-medium text-sm md:text-base rounded-full px-2 md:px-5 py-3 text-center cursor-pointer mt-6 hover:text-primary hover:bg-tersier md:mt-0 w-full duration-700 transition-all`}
       >
         Tambah Surat Masuk
       </button>

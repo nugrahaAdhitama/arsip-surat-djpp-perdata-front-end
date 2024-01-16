@@ -25,7 +25,7 @@ function Home() {
       <Main active={"Surat Masuk"} description={"Kelola Surat Masuk di sini"}>
         <div className="flex flex-col gap-4 mt-10 mb-5 overflow-x-auto overflow-y-hidden w-full h-full no-scrollbar scrollbar-hide">
           <div className="flex justify-end">
-            <button className="bg-secondary py-1 rounded-md text-primary mx-5 w-[300px]">
+            <button className="bg-secondary py-1 rounded-md text-primary mx-5 w-[300px] hover:bg-primary hover:text-secondary animation-all duration-150">
               <Link href="/surat-masuk/tambah" className="block">
                 Tambah Data Surat Masuk
               </Link>
