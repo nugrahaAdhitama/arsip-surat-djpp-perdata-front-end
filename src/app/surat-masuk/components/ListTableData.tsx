@@ -78,7 +78,7 @@ export default function ListTableData() {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {/* {for i = 0; i < suratMasuk.length; i++} */}1
+                    {index + 1}
                   </Typography>
                 </td>
                 <td className={classes}>
