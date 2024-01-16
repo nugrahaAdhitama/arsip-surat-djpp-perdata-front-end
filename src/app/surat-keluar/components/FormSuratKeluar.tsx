@@ -6,6 +6,15 @@ import { getToken } from "@/utils/token";
 import Swal from "sweetalert2";
 import axios, { isAxiosError } from "axios";
 import "@/styles/styles.css";
+import Loader from "@/components/Loader";
+
+const SkeletonInput = () => (
+  <div className="animate-pulse bg-gray-300 h-10 w-full my-2 rounded-md" />
+);
+
+const SkeletonTextArea = () => (
+  <div className="animate-pulse bg-gray-300 h-20 w-full my-2 rounded-md" />
+);
 
 export default function FormSuratKeluar() {
   const router = useRouter();
@@ -19,6 +28,8 @@ export default function FormSuratKeluar() {
   const [catatan_surat, setCatatanSurat] = useState<string>("");
   const [keterangan_surat, setKeteranganSurat] = useState<string>("");
   const [tujuan_surat, setTujuanSurat] = useState<string>("");
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChangeTanggalKeluar = (e: any) => {
     setTanggalKeluar(e.target.value);
@@ -54,6 +65,7 @@ export default function FormSuratKeluar() {
 
   const handleUploadSuratKeluar = async (e: any) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const formData = new FormData();
     formData.append("tanggal_keluar", tanggal_keluar);
@@ -119,6 +131,8 @@ export default function FormSuratKeluar() {
 
         router.push("/surat-keluar");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -129,100 +143,115 @@ export default function FormSuratKeluar() {
       className="flex flex-col gap-3 mt-5 p-5 bg-secondary rounded-xl w-full h-full text-primary"
       onSubmit={handleUploadSuratKeluar}
     >
-      <div className="flex flex-row gap-3">
-        <Input
-          label="Tanggal Keluar"
-          name="tanggal_keluar"
-          type="date"
-          placeholder="Masukkan tanggal keluar surat..."
-          value={tanggal_keluar}
-          onChange={onChangeTanggalKeluar}
-          width="full"
-        />
+      {isLoading ? (
+        // Render Skeletons when loading
+        <>
+          <SkeletonInput />
+          <SkeletonInput />
+          <SkeletonInput />
+          <SkeletonInput />
+          <SkeletonTextArea />
+          <SkeletonTextArea />
+        </>
+      ) : (
+        // Render form fields when not loading
+        <>
+          <div className="flex flex-row gap-3">
+            <Input
+              label="Tanggal Keluar"
+              name="tanggal_keluar"
+              type="date"
+              placeholder="Masukkan tanggal keluar surat..."
+              value={tanggal_keluar}
+              onChange={onChangeTanggalKeluar}
+              width="full"
+            />
 
-        <Input
-          label="Tanggal Surat"
-          name="tanggal_surat"
-          type="date"
-          placeholder="Masukkan tanggal surat..."
-          value={tanggal_surat}
-          onChange={onChangeTanggalSurat}
-          width="full"
-        />
-      </div>
+            <Input
+              label="Tanggal Surat"
+              name="tanggal_surat"
+              type="date"
+              placeholder="Masukkan tanggal surat..."
+              value={tanggal_surat}
+              onChange={onChangeTanggalSurat}
+              width="full"
+            />
+          </div>
 
-      <div className="flex flex-row gap-3">
-        <Input
-          label="Asal Surat"
-          name="asal_surat"
-          type="text"
-          placeholder="Masukkan asal surat..."
-          value={asal_surat}
-          onChange={onChangeAsalSurat}
-          width="half"
-        />
+          <div className="flex flex-row gap-3">
+            <Input
+              label="Asal Surat"
+              name="asal_surat"
+              type="text"
+              placeholder="Masukkan asal surat..."
+              value={asal_surat}
+              onChange={onChangeAsalSurat}
+              width="half"
+            />
 
-        <Input
-          label="Tujuan Surat"
-          name="tujuan_surat"
-          type="text"
-          placeholder="Masukkan tujuan surat..."
-          value={tujuan_surat}
-          onChange={onChangeTujuanSurat}
-          width="half"
-        />
+            <Input
+              label="Tujuan Surat"
+              name="tujuan_surat"
+              type="text"
+              placeholder="Masukkan tujuan surat..."
+              value={tujuan_surat}
+              onChange={onChangeTujuanSurat}
+              width="half"
+            />
 
-        <Input
-          label="Nomor Surat"
-          name="nomor_surat"
-          type="text"
-          placeholder="Masukkan nomor surat..."
-          value={nomor_surat}
-          onChange={onChangeNomorSurat}
-          width="half"
-        />
-      </div>
+            <Input
+              label="Nomor Surat"
+              name="nomor_surat"
+              type="text"
+              placeholder="Masukkan nomor surat..."
+              value={nomor_surat}
+              onChange={onChangeNomorSurat}
+              width="half"
+            />
+          </div>
 
-      <div className="flex flex-row gap-3">
-        <TextArea
-          label="Catatan Surat (jika ada)"
-          name="catatan_surat"
-          placeholder="Masukkan catatan surat..."
-          value={catatan_surat}
-          onChange={onChangeCatatanSurat}
-          width="half"
-        />
+          <div className="flex flex-row gap-3">
+            <TextArea
+              label="Catatan Surat (jika ada)"
+              name="catatan_surat"
+              placeholder="Masukkan catatan surat..."
+              value={catatan_surat}
+              onChange={onChangeCatatanSurat}
+              width="half"
+            />
 
-        <TextArea
-          label="Keterangan Surat (jika ada)"
-          name="keterangan_surat"
-          placeholder="Masukkan keterangan surat..."
-          value={keterangan_surat}
-          onChange={onChangeKeteranganSurat}
-          width="half"
-        />
+            <TextArea
+              label="Keterangan Surat (jika ada)"
+              name="keterangan_surat"
+              placeholder="Masukkan keterangan surat..."
+              value={keterangan_surat}
+              onChange={onChangeKeteranganSurat}
+              width="half"
+            />
 
-        <TextArea
-          label="Perihal"
-          name="perihal"
-          placeholder="Masukkan perihal surat..."
-          value={perihal}
-          onChange={onChangePerihalSurat}
-          width="half"
-        />
-      </div>
+            <TextArea
+              label="Perihal"
+              name="perihal"
+              placeholder="Masukkan perihal surat..."
+              value={perihal}
+              onChange={onChangePerihalSurat}
+              width="half"
+            />
+          </div>
 
-      <label htmlFor="file_surat_masuk">
-        Pilih file surat keluar di sini...
-      </label>
-      <input
-        id="file_surat_masuk"
-        name="file_surat_masuk"
-        type="file"
-        placeholder="Masukkan file surat..."
-        onChange={(e: any) => setFileSuratKeluar(e.target.files[0])}
-        width="full"
-      />
+          <label htmlFor="file_surat_masuk">
+            Pilih file surat keluar di sini...
+          </label>
+          <input
+            id="file_surat_masuk"
+            name="file_surat_masuk"
+            type="file"
+            placeholder="Masukkan file surat..."
+            onChange={(e: any) => setFileSuratKeluar(e.target.files[0])}
+            width="full"
+          />
+        </>
+      )}
 
       <button
         about="Submit"
