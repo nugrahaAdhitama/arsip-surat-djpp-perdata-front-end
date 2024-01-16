@@ -115,7 +115,7 @@ const Sidebar: React.FC<any> = ({ active }) => {
         <button
           type="button"
           onClick={handleLogoutUser}
-          className="w-16 p-4 mt-8 border text-gray-700 rounded-2xl text-2xl flex items-center justify-center py-5"
+          className="w-16 p-4 mt-8 border text-gray-700 rounded-2xl text-2xl flex items-center justify-center py-5 bg-"
         >
           <p className="mr-5">
             <LogoutOutlinedIcon color="inherit" fontSize="inherit" />
