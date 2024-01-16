@@ -147,9 +147,9 @@ const Auth: React.FC<any> = ({ type }) => {
         </form>
       </section>
 
-      <p className="text-sm text-tersier absolute bottom-8 text-center">
+      {/* <p className="text-sm text-tersier absolute bottom-8 text-center">
         &copy; Candiate College 2023
-      </p>
+      </p> */}
     </main>
   );
 };
