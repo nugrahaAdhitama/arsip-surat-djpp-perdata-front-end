@@ -5,8 +5,14 @@ import { Card, Typography } from "@material-tailwind/react";
 import { getToken } from "@/utils/token";
 import axios from "axios";
 
+const Skeleton = () => (
+  <div className="animate-pulse bg-gray-300 h-4 w-full my-2" />
+);
+
 export default function ListTableData() {
   const storedToken = getToken();
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const TABLE_HEAD = [
     "No",
@@ -34,6 +40,7 @@ export default function ListTableData() {
 
       setTimeout(() => {
         setSuratKeluar(response.data.data);
+        setIsLoading(false);
       }, 2000);
     } catch (error) {
       console.error(error);
@@ -68,103 +75,119 @@ export default function ListTableData() {
         </thead>
 
         <tbody>
-          {suratKeluar.map((surat: any, index: number) => {
-            const isLast = index === suratKeluar.length - 1;
-            const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+          {isLoading
+            ? // Display skeleton if data is loading
+              Array.from({ length: 5 }).map((_, index) => (
+                <tr key={index}>
+                  {Array.from({ length: TABLE_HEAD.length }).map(
+                    (_, cellIndex) => (
+                      <td key={cellIndex} className="p-4">
+                        <Skeleton />
+                      </td>
+                    )
+                  )}
+                </tr>
+              ))
+            : // Display data if it's loaded
+              suratKeluar.map((surat: any, index: number) => {
+                const isLast = index === suratKeluar.length - 1;
+                const classes = isLast
+                  ? "p-4"
+                  : "p-4 border-b border-blue-gray-50";
 
-            return (
-              <tr key={surat.id}>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                    placeholder="Your placeholder here"
-                  >
-                    {index + 1}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                    placeholder="Your placeholder here"
-                  >
-                    {surat.tanggal_keluar}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                    placeholder="Your placeholder here"
-                  >
-                    {surat.asal_surat}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                    placeholder="Your placeholder here"
-                  >
-                    {surat.tujuan_surat}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                    placeholder="Your placeholder here"
-                  >
-                    {surat.nomor_surat}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                    placeholder="Your placeholder here"
-                  >
-                    {surat.perihal}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                    placeholder="Your placeholder here"
-                  >
-                    <button className="p-2 bg-secondary text-primary rounded-md hover:bg-primary hover:text-secondary transition-all duration-150">
-                      <a
-                        href={`http://127.0.0.1:8000${surat.file_surat_keluar}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                return (
+                  <tr key={surat.id}>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                        placeholder="Your placeholder here"
                       >
-                        File Surat
-                      </a>
-                    </button>
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                    placeholder="Your placeholder here"
-                  >
-                    {surat.keterangan}
-                  </Typography>
-                </td>
-              </tr>
-            );
-          })}
+                        {index + 1}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                        placeholder="Your placeholder here"
+                      >
+                        {surat.tanggal_keluar}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                        placeholder="Your placeholder here"
+                      >
+                        {surat.asal_surat}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                        placeholder="Your placeholder here"
+                      >
+                        {surat.tujuan_surat}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                        placeholder="Your placeholder here"
+                      >
+                        {surat.nomor_surat}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                        placeholder="Your placeholder here"
+                      >
+                        {surat.perihal}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                        placeholder="Your placeholder here"
+                      >
+                        <button className="p-2 bg-secondary text-primary rounded-md hover:bg-primary hover:text-secondary transition-all duration-150">
+                          <a
+                            href={`http://127.0.0.1:8000${surat.file_surat_keluar}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            File Surat
+                          </a>
+                        </button>
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                        placeholder="Your placeholder here"
+                      >
+                        {surat.keterangan}
+                      </Typography>
+                    </td>
+                  </tr>
+                );
+              })}
         </tbody>
       </table>
     </Card>
