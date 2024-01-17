@@ -36,7 +36,7 @@ function Home() {
     const fetchSuratMasuk = async () => {
       try {
         const response = await axios.get(
-          "https://5077-119-18-156-78.ngrok-free.app/api/surat-masuk",
+          "https://resource-arsip-suratmasuk-suratkeluar.my.id/api/surat-masuk",
           {
             headers: {
               Authorization: `Bearer ${storedToken}`,
@@ -190,7 +190,7 @@ function Home() {
                           >
                             <button className="p-2 bg-secondary text-primary rounded-md hover:bg-primary hover:text-secondary transition-all duration-150">
                               <a
-                                href={`https://5077-119-18-156-78.ngrok-free.app${surat.file_surat_masuk}`}
+                                href={`https://resource-arsip-suratmasuk-suratkeluar.my.id${surat.file_surat_masuk}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >

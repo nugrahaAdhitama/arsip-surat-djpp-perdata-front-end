@@ -33,7 +33,7 @@ export default function ListTableData() {
     const fetchSuratKeluar = async () => {
       try {
         const response = await axios.get(
-          "https://5077-119-18-156-78.ngrok-free.app/api/surat-keluar",
+          "https://resource-arsip-suratmasuk-suratkeluar.my.id/api/surat-keluar",
           {
             headers: {
               Authorization: `Bearer ${storedToken}`,
@@ -169,7 +169,7 @@ export default function ListTableData() {
                     >
                       <button className="p-2 bg-secondary text-primary rounded-md hover:bg-primary hover:text-secondary transition-all duration-150">
                         <a
-                          href={`https://5077-119-18-156-78.ngrok-free.app${surat.file_surat_keluar}`}
+                          href={`https://resource-arsip-suratmasuk-suratkeluar.my.id${surat.file_surat_keluar}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >

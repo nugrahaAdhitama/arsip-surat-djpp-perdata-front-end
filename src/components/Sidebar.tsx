@@ -35,7 +35,7 @@ const Sidebar: React.FC<any> = ({ active }) => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/logout",
+        "https://resource-arsip-suratmasuk-suratkeluar.my.id/api/logout",
         null,
         {
           headers: {
