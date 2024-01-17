@@ -9,6 +9,8 @@ const Skeleton = () => (
   <div className="animate-pulse bg-gray-300 h-4 w-full my-2" />
 );
 
+//
+
 export default function ListTableData() {
   const storedToken = getToken();
 
@@ -27,29 +29,29 @@ export default function ListTableData() {
 
   const [suratKeluar, setSuratKeluar] = useState<any>([]);
 
-  const fetchSuratKeluar = async () => {
-    try {
-      const response = await axios.get(
-        "https://5077-119-18-156-78.ngrok-free.app/api/surat-keluar",
-        {
-          headers: {
-            Authorization: `Bearer ${storedToken}`,
-          },
-        }
-      );
-
-      setTimeout(() => {
-        setSuratKeluar(response.data.data);
-        setIsLoading(false);
-      }, 2000);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
+    const fetchSuratKeluar = async () => {
+      try {
+        const response = await axios.get(
+          "https://5077-119-18-156-78.ngrok-free.app/api/surat-keluar",
+          {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+            },
+          }
+        );
+
+        setTimeout(() => {
+          setSuratKeluar(response.data.data);
+          setIsLoading(false);
+        }, 2000);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchSuratKeluar();
-  }, []);
+  }, [storedToken]);
 
   return (
     <Card className="h-full w-full overflow-scroll" placeholder="">

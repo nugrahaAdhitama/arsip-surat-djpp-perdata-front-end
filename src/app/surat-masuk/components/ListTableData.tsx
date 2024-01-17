@@ -23,31 +23,33 @@ export default function ListTableData() {
     "File",
   ];
 
+  //
+
   const [suratMasuk, setSuratMasuk] = useState<any>([]);
 
-  const fetchSuratMasuk = async () => {
-    try {
-      const response = await axios.get(
-        "https://5077-119-18-156-78.ngrok-free.app/api/surat-masuk",
-        {
-          headers: {
-            Authorization: `Bearer ${storedToken}`,
-          },
-        }
-      );
-
-      setTimeout(() => {
-        setSuratMasuk(response.data.data);
-        setIsLoading(false);
-      }, 2000);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
+    const fetchSuratMasuk = async () => {
+      try {
+        const response = await axios.get(
+          "https://5077-119-18-156-78.ngrok-free.app/api/surat-masuk",
+          {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+            },
+          }
+        );
+
+        setTimeout(() => {
+          setSuratMasuk(response.data.data);
+          setIsLoading(false);
+        }, 2000);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchSuratMasuk();
-  }, []);
+  }, [storedToken]);
 
   return (
     <Card className="h-full w-full overflow-scroll" placeholder="">
