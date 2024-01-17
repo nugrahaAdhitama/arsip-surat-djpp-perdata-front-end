@@ -30,7 +30,7 @@ export default function ListTableData() {
   const fetchSuratKeluar = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/api/surat-keluar",
+        "https://5077-119-18-156-78.ngrok-free.app/api/surat-keluar",
         {
           headers: {
             Authorization: `Bearer ${storedToken}`,
@@ -167,7 +167,7 @@ export default function ListTableData() {
                     >
                       <button className="p-2 bg-secondary text-primary rounded-md hover:bg-primary hover:text-secondary transition-all duration-150">
                         <a
-                          href={`http://127.0.0.1:8000${surat.file_surat_keluar}`}
+                          href={`https://5077-119-18-156-78.ngrok-free.app${surat.file_surat_keluar}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >

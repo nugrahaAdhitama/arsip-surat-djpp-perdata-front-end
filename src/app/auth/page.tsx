@@ -38,7 +38,7 @@ const Auth: React.FC<any> = ({ type }) => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/login",
+        "https://5077-119-18-156-78.ngrok-free.app/api/login",
         formData
       );
 
