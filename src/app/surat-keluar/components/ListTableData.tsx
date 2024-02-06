@@ -169,7 +169,7 @@ export default function ListTableData() {
                     >
                       <button className="p-2 bg-secondary text-primary rounded-md hover:bg-primary hover:text-secondary transition-all duration-150">
                         <a
-                          href={`https://resource-arsip-suratmasuk-suratkeluar.my.id${surat.file_surat_keluar}`}
+                          href={`${surat.file_surat_keluar}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
